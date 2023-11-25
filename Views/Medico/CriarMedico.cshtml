@@ -1,0 +1,142 @@
+﻿@model HealtMonitorV4.Models.MedicoModel
+
+@{
+    ViewData["Title"] = "Novo Medico";
+}
+@{
+    var mensagem = TempData["Mensagem"] as string;
+}
+
+@if (!string.IsNullOrEmpty(mensagem))
+{
+    <div class="alert alert-info">
+        @mensagem
+    </div>
+}
+
+<h4 class="display-4">Novo Medico</h4>
+<hr />
+<form asp-controller="Medico" asp-action="CriarMedico">
+    <div class="row text-center">
+        <div class="row g-2">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input type="text" asp-for="IdMedico" class="form-control" id="floatingInputIdMedico" value="">
+                    <label for="floatingInputIdMedico">Id Medico</label>
+                </div>
+            </div>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input type="text" asp-for="NomeMedico" class="form-control" id="floatingInputEmail" value="">
+                    <label for="floatingInputEmail">Nome Medico</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="row g-2">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input oninput="mascaraDataNascimento(this)" type="text" asp-for="DataNascimento" class="form-control" id="floatingInputDataNascimento" value="">
+                    <label for="floatingInputDataNascimento">Data de Nascimento</label>
+                </div>
+            </div>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input type="email" asp-for="EmailMedico" class="form-control" id="floatingInputEmail" value="">
+                    <label for="floatingInputEmail">E-mail do Medico</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="row g-2">
+               <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input oninput="mascaraCPF(this)" type="text" asp-for="CpfMedico" class="form-control" id="floatingInputCPF" value="">
+                        <label for="floatingInputCPF">CPF</label>
+                    </div>
+               </div>
+               <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input  type="text" asp-for="CrmMedico" class="form-control"value="">
+                        <label for="floatingInputRG">CRM</label>
+                    </div>
+               </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancelar</a>
+    </div>
+</form>
+
+<script>
+    function mascaraDataNascimento(i) {
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "10"); // Máximo de 10 dígitos para uma data (DD/MM/AAAA)
+
+        if (v.length === 2 || v.length === 5) i.value += "/";
+    }
+
+    function mascaraCPF(i) {
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "14");
+        if (v.length == 3 || v.length == 7) i.value += ".";
+        if (v.length == 11) i.value += "-";
+    }
+
+    function mascaraRG(i) {
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "12"); // Mudando para 12 para a máscara de RG
+        if (v.length == 2 || v.length == 6) i.value += ".";
+        if (v.length == 10) i.value += "-";
+    }
+
+    function mascaraCEP(i) {
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "9"); // Máximo de 9 dígitos para um CEP no formato 01001-000
+        if (v.length == 5) i.value += "-";
+    }
+
+    function mascaraTel(i) {
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "15"); // Máximo de 15 dígitos para um telefone
+        if (v.length === 2) i.value = `(${v}) `;
+        if (v.length === 10) i.value += "-";
+    }
+
+</script>

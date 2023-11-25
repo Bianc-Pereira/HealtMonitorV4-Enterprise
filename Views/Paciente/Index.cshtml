@@ -1,0 +1,42 @@
+﻿@model List<PacienteModel>
+@{
+    ViewData["Title"] = "Pacientes Cadastrados";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Pacientes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Posição na Fila</th>
+                <th scope="col">Senha Paciente</th>
+                <th scope="col">Nome Completo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@Model[i].IdPaciente</td>
+                        <td>@Model[i].NomePaciente</td>
+                        <td>
+                            <a class="btn btn-primary" role="button" asp-controller="Paciente" asp-action="" asp-route-id="@Model[i].IdPaciente">Editar</a>
+                            <a class="btn btn-danger" role="button" asp-controller="Paciente" asp-action="" asp-route-id="@Model[i].IdPaciente">Deletar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">Nenhum paciente cadastrado.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

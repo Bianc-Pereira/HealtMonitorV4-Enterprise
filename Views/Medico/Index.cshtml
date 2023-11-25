@@ -1,0 +1,40 @@
+﻿@model List<MedicoModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Medicos</h1>
+
+<p>
+    <a asp-action="CriarMedico" asp-controller="Medico">Cadastrar Novo Médico</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>CRM</th>
+            <th>Nome Médico</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].CrmMedico</td>
+                    <td>@Model[i].NomeMedico</td>
+                    <td>
+                        <a class="btn btn-primary" role="button" asp-controller="Medico" asp-action="EditarMedico" asp-route-id="@Model[i].IdMedico">Editar</a>
+                        <a class="btn btn-danger" role="button" asp-controller="Medico" asp-action="DeletarMedico" asp-route-id="@Model[i].IdMedico">Deletar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">Nenhum Medico cadastrado.</td>
+            </tr>
+        }
+    </tbody>
+</table>
