@@ -25,8 +25,9 @@
                         <td>@Model[i].IdPaciente</td>
                         <td>@Model[i].NomePaciente</td>
                         <td>
-                            <a class="btn btn-primary" role="button" asp-controller="Paciente" asp-action="" asp-route-id="@Model[i].IdPaciente">Editar</a>
-                            <a class="btn btn-danger" role="button" asp-controller="Paciente" asp-action="" asp-route-id="@Model[i].IdPaciente">Deletar</a>
+                            <a class="btn btn-primary" role="button" asp-controller="Paciente" asp-action="Editar" asp-route-id="@Model[i].IdPaciente">Editar</a>
+                            <a class="btn btn-danger" role="button" asp-controller="Paciente" asp-action="DeletarPaciente" asp-route-id="@Model[i].IdPaciente">Deletar</a>
+
                         </td>
                     </tr>
                 }

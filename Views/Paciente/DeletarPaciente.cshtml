@@ -1,0 +1,21 @@
+﻿@model PacienteModel
+
+<div class="text-center">
+    <h1 class="display-4">Deletar Paciente</h1>
+    <br />
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Deseja deletar o registro do Paciente </h5>
+            <p class="card-text">Os dados do prontuário serão deletados permanentemente!</p>
+            <a class="btn btn-primary" asp-controller="Paciente" asp-action="Index">Cancelar</a>
+
+            <form asp-controller="Paciente" asp-action="ConfirmarExclusao" method="post">
+                <input type="hidden" asp-for="IdPaciente" value="@Model.IdPaciente" />
+                <!-- Adicione o campo oculto para armazenar o ID do paciente -->
+
+                <button type="submit" class="btn btn-danger">Deletar</button>
+            </form>
+        </div>
+    </div>
+</div>

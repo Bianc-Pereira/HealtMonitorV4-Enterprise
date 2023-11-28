@@ -57,6 +57,44 @@ namespace HealtMonitorV4.Controllers
             }
         }
 
+        public IActionResult DeletarPaciente(int id)
+        {
+            // Aqui você pode adicionar lógica para buscar o paciente pelo ID
+            // e passar os dados para a view de confirmação de exclusão
+            PacienteModel paciente = _repositorio.obterPacientePorId(id.ToString());
+
+            if (paciente == null)
+            {
+                // Se o paciente não for encontrado, redirecione ou exiba uma mensagem de erro
+                TempData["Mensagem"] = "Paciente não encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            return View(paciente);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmarExclusao(int id)
+        {
+            try
+            {
+                // Chama o método para excluir o paciente pelo ID
+                _repositorio.ExcluirPaciente(id);
+
+                // Mensagem de sucesso após a exclusão bem-sucedida
+                TempData["Mensagem"] = "Exclusão realizada com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao excluir paciente: {ex.Message}");
+
+                // Mensagem de erro de sistema ao excluir
+                TempData["Mensagem"] = "Erro de sistema ao excluir. Tente novamente mais tarde.";
+                return RedirectToAction("Index"); // ou RedirectToAction("Erro");
+            }
+        }
+
     }
     
 }

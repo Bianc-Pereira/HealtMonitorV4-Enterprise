@@ -1,5 +1,6 @@
 ﻿using HealtMonitorV4.Data;
 using HealtMonitorV4.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealtMonitorV4.Repositorio
 {
@@ -7,12 +8,12 @@ namespace HealtMonitorV4.Repositorio
     {
         private readonly Contexto _contexto;
 
-        public Repositorio (Contexto contexto)
+        public Repositorio(Contexto contexto)
         {
             _contexto = contexto;
         }
 
-        public PacienteModel AdicionarPaciente (PacienteModel paciente)
+        public PacienteModel AdicionarPaciente(PacienteModel paciente)
         {
             //Gravar no banco de dados
             _contexto.Paciente.Add(paciente);
@@ -26,7 +27,7 @@ namespace HealtMonitorV4.Repositorio
             //Gravar no banco de dados 
             _contexto.Medico.Add(medico);
             _contexto.SaveChanges();
-            
+
             return medico;
         }
 
@@ -38,6 +39,33 @@ namespace HealtMonitorV4.Repositorio
         public List<MedicoModel> BuscarMedicos()
         {
             return _contexto.Medico.ToList();
+        }
+
+
+        public MedicoModel listarPorIdMedico(string idMedico)
+        {
+            return _contexto.Medico.FirstOrDefault(x => x.IdMedico == idMedico);
+        }
+
+        public PacienteModel listarPorIdPaciente(string idPaciente)
+        {
+            return _contexto.Paciente.FirstOrDefault(x => x.IdPaciente == idPaciente);
+        }
+
+        public PacienteModel obterPacientePorId(string idPaciente)
+        {
+            return _contexto.Paciente.FirstOrDefault(x => x.IdPaciente == idPaciente);
+        }
+
+        public void ExcluirPaciente(int idPaciente)
+        {
+            var paciente = _contexto.Paciente.Find(idPaciente);
+
+            if (paciente != null)
+            {
+                _contexto.Paciente.Remove(paciente);
+                _contexto.SaveChanges();
+            }
         }
     }
 }
